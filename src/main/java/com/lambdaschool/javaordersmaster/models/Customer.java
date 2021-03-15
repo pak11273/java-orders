@@ -1,6 +1,10 @@
 package com.lambdaschool.javaordersmaster.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "customers")
@@ -30,9 +34,14 @@ public class Customer {
 
     private String phone;
 
-//  Long foreign key (one agent to many customers) not null
-    @ManyToOne
-    @JoinColumn(name= "agentid", nullable = false)
+    @OneToMany(mappedBy = "custcode",
+    cascade = CascadeType.ALL,
+    orphanRemoval = true)
+    private List<Order> orders = new ArrayList<>();
+
+//    AGENTCODE Long foreign key (one agent to many customers) not null
+    @ManyToOne()
+    @JoinColumn(name="agentcode", nullable = false)
     private Agent agentcode;
 
     public Customer() {
