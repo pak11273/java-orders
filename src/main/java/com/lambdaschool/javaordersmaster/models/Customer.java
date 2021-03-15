@@ -31,6 +31,24 @@ public class Customer {
     private String phone;
 
 //  Long foreign key (one agent to many customers) not null
-    @OneToMany(mappedBy = "agents")
-    private long agentcode;
+    @ManyToOne
+    @JoinColumn(name= "agentid", nullable = false)
+    private Agent agentcode;
+
+    public Customer() {
+    }
+
+    public Customer(String custname, String custcity, String workingarea, String custcountry, String grade, double openingamt, double receiveamt, double paymentamt, double outstandingamt, String phone, Agent agentcode) {
+        this.custname = custname;
+        this.custcity = custcity;
+        this.workingarea = workingarea;
+        this.custcountry = custcountry;
+        this.grade = grade;
+        this.openingamt = openingamt;
+        this.receiveamt = receiveamt;
+        this.paymentamt = paymentamt;
+        this.outstandingamt = outstandingamt;
+        this.phone = phone;
+        this.agentcode = agentcode;
+    }
 }

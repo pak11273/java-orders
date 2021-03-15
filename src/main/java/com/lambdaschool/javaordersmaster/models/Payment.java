@@ -13,4 +13,11 @@ public class Payment {
 
     @Column(nullable = false)
     private String type;
+
+    public Payment() {
+    }
+
+    public Payment(String type) {
+        this.type = type;
+    }
 }

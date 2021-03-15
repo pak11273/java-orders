@@ -19,4 +19,14 @@ public class Order {
     private long custcode;
 
     private String orderdescription;
+
+    public Order() {
+    }
+
+    public Order(double ordamount, double advanceamount, long custcode, String orderdescription) {
+        this.ordamount = ordamount;
+        this.advanceamount = advanceamount;
+        this.custcode = custcode;
+        this.orderdescription = orderdescription;
+    }
 }
