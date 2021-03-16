@@ -3,7 +3,8 @@ package com.lambdaschool.javaordersmaster.models;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-
+//
+//INSERT INTO ORDERS (ordnum, ordamount, advanceamount, custcode, orderdescription)
 @Entity
 @Table(name = "orders")
 public class Order {
@@ -15,26 +16,28 @@ public class Order {
 
     private double advanceamount;
 
+    private String orderdescription;
+
     @ManyToOne
     @JoinColumn(name="custcode", nullable = false)
-    private Customer custcode;
+    private Customer customer;
 
     @ManyToMany()
-    @JoinTable(name = "orderpayments",
-    joinColumns = @JoinColumn(name = "ordernum"),
+    @JoinTable(name = "orderspayments",
+    joinColumns = @JoinColumn(name = "ordnum"),
     inverseJoinColumns = @JoinColumn(name="paymentid"))
     private Set<Payment> payments = new HashSet<>();
 
-    private String orderdescription;
 
     public Order() {
     }
 
-    public Order(double ordamount, double advanceamount, Customer custcode, String orderdescription) {
+    public Order(double ordamount, double advanceamount, String orderdescription, Customer customer, Set<Payment> payments) {
         this.ordamount = ordamount;
         this.advanceamount = advanceamount;
-        this.custcode = custcode;
         this.orderdescription = orderdescription;
+        this.customer = customer;
+        this.payments = payments;
     }
 
     public long getOrdnum() {
@@ -61,20 +64,20 @@ public class Order {
         this.advanceamount = advanceamount;
     }
 
-    public Customer getCustcode() {
-        return custcode;
-    }
-
-    public void setCustcode(Customer custcode) {
-        this.custcode = custcode;
-    }
-
     public String getOrderdescription() {
         return orderdescription;
     }
 
     public void setOrderdescription(String orderdescription) {
         this.orderdescription = orderdescription;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public Set<Payment> getPayments() {

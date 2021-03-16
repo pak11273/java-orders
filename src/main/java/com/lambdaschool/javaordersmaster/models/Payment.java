@@ -9,7 +9,6 @@ import java.util.Set;
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false)
     private long paymentid;
 
     @Column(nullable = false, unique = true)

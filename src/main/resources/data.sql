@@ -21,8 +21,7 @@ VALUES (1, 'Ramasundar', 'Bangalore', 0.15, '077-25814763', ''),
        (11, 'Ivan', 'Torento', 0.15, '008-22544166', ''),
        (12, 'Benjamin', 'Hampshair', 0.11, '008-22536178', '');
 
-INSERT INTO CUSTOMERS (custcode, custname, custcity, workingarea, custcountry, grade, openingamt, receiveamt,
-                       paymentamt, outstandingamt, phone, agentcode)
+INSERT INTO CUSTOMERS (custcode, custname, custcity, workingarea, custcountry, grade, openingamt, receiveamt, paymentamt, outstandingamt, phone, agentcode)
 VALUES (1, 'Holmes', 'London', 'London', 'UK', '2', 6000.00, 5000.00, 7000.00, 4000.00, 'BBBBBBB', 3),
        (2, 'Micheal', 'New York', 'New York', 'USA', '2', 3000.00, 5000.00, 2000.00, 6000.00, 'CCCCCCC', 8),
        (3, 'Albert', 'New York', 'New York', 'USA', '3', 5000.00, 7000.00, 6000.00, 6000.00, 'BBBBSBB', 8),
