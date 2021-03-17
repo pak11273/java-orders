@@ -79,4 +79,10 @@ public class CustomerServicesImpl implements CustomerServices {
     public List<Customer> findByNameLike(String subname) {
         return custrepos.findByCustnameContainingIgnoringCase(subname);
     }
+
+    @Override
+    public void delete(long id) {
+        custrepos.findById(id).orElseThrow(()-> new EntityNotFoundException("Restaurant " + id + " not found."));
+        custrepos.deleteById(id);
+    }
 }

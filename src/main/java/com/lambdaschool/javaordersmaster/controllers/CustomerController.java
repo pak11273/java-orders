@@ -1,6 +1,7 @@
 package com.lambdaschool.javaordersmaster.controllers;
 
 import com.lambdaschool.javaordersmaster.models.Customer;
+import com.lambdaschool.javaordersmaster.repositories.CustomersRepository;
 import com.lambdaschool.javaordersmaster.services.CustomerServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
@@ -63,4 +65,25 @@ public class CustomerController
         return new ResponseEntity<>(newCustomer, responseHeaders, HttpStatus.CREATED);
 
     }
+
+    @DeleteMapping(value="/customer/{custid}")
+    public ResponseEntity<?> deleteById(@PathVariable long custid)
+    {
+        customerServices.delete(custid);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+// PUT /customers/customer/{custcode} - completely replaces the customer record including associated orders with the provided data
+//
+// PATCH /customers/customer/{custcode} - updates customers with the new data. Only the new data is to be sent from the frontend client.
+//
+// DELETE /customers/customer/{custcode} - Deletes the given customer including any associated orders
+//
+// POST /orders/order - adds a new order to an existing customer
+//
+// PUT /orders/order/{ordernum} - completely replaces the given order record
+//
+// DELETE /orders/order/{ordernum} - deletes the given order
+
 }
