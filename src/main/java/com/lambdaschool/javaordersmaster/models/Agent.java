@@ -1,5 +1,7 @@
 package com.lambdaschool.javaordersmaster.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +24,15 @@ public class Agent {
 
     private String country;
 
-   @OneToMany(mappedBy = "agent")
+   @OneToMany(mappedBy = "agent", cascade = CascadeType.ALL, orphanRemoval = true)
+   @JsonIgnoreProperties(value = "agent", allowSetters = true)
     private List<Customer> customers = new ArrayList<>();
 
     public Agent() {
     }
 
-    public Agent(String agentname, String workingarea, double commission, String phone, String country, List<Customer> customers) {
+//    public Agent(String agentname, String workingarea, double commission, String phone, String country, List<Customer> customers) {
+    public Agent(String agentname, String workingarea, double commission, String phone, String country) {
         this.agentname = agentname;
         this.workingarea = workingarea;
         this.commission = commission;

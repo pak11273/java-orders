@@ -1,10 +1,11 @@
 package com.lambdaschool.javaordersmaster.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-//
-//INSERT INTO ORDERS (ordnum, ordamount, advanceamount, custcode, orderdescription)
+
 @Entity
 @Table(name = "orders")
 public class Order {
@@ -18,26 +19,28 @@ public class Order {
 
     private String orderdescription;
 
-    @ManyToOne
-    @JoinColumn(name="custcode", nullable = false)
-    private Customer customer;
-
     @ManyToMany()
     @JoinTable(name = "orderspayments",
-    joinColumns = @JoinColumn(name = "ordnum"),
-    inverseJoinColumns = @JoinColumn(name="paymentid"))
-    private Set<Payment> payments = new HashSet<>();
+            joinColumns = @JoinColumn(name = "ordnum"),
+            inverseJoinColumns = @JoinColumn(name="paymentid"))
+    @JsonIgnoreProperties("orders")
+    Set<Payment> payments = new HashSet<>();
 
+    @ManyToOne
+    @JoinColumn(name="custcode", nullable = false)
+    @JsonIgnoreProperties("orders")
+    private Customer customer;
 
     public Order() {
     }
 
-    public Order(double ordamount, double advanceamount, String orderdescription, Customer customer, Set<Payment> payments) {
+//    public Order(double ordamount, double advanceamount, String orderdescription, Customer customer, Set<Payment> payments) {
+    public Order(double ordamount, double advanceamount, Customer customer, String orderdescription ) {
         this.ordamount = ordamount;
         this.advanceamount = advanceamount;
         this.orderdescription = orderdescription;
         this.customer = customer;
-        this.payments = payments;
+//        this.payments = payments;
     }
 
     public long getOrdnum() {
