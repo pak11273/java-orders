@@ -29,6 +29,7 @@ public class CustomerController
     }
 
     //http://localhost:2019/customers/customer/7
+    //http://localhost:2019/customers/customer/77
     @GetMapping(value = "/customer/{custid}", produces = "application/json")
     public ResponseEntity<?> findCustomerById(@PathVariable long custid)
     {
@@ -37,11 +38,11 @@ public class CustomerController
     }
 
     //http://localhost:2019/customers/namelike/mes
+    //http://localhost:2019/customers/namelike/cin
     @GetMapping(value="/namelike/{subname}", produces = "application/json")
     public ResponseEntity<?> findCustomerByNameLike(@PathVariable String subname)
     {
         List<Customer> rtnlist = customerServices.findByNameLike(subname);
         return new ResponseEntity<>(rtnlist, HttpStatus.OK);
     }
-    //http://localhost:2019/customers/namelike/cin
 }
