@@ -1,6 +1,7 @@
 package com.lambdaschool.javaordersmaster.services;
 
 import com.lambdaschool.javaordersmaster.models.Customer;
+import com.lambdaschool.javaordersmaster.models.Order;
 import com.lambdaschool.javaordersmaster.repositories.CustomersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +17,49 @@ public class CustomerServicesImpl implements CustomerServices {
     @Autowired
     private CustomersRepository custrepos;
 
+//    @Transactional
+//    @Override
+//    public Customer save(Customer customer)
     @Transactional
     @Override
     public Customer save(Customer customer)
     {
-        return custrepos.save(customer);
+        Customer newCustomer = new Customer();
+
+        //POST -> new resource
+        //PUT -> replace existing resource
+        if (customer.getCustcode() != 0) {
+            custrepos.findById(customer.getCustcode())
+                    .orElseThrow(() -> new EntityNotFoundException("Customer " + customer.getCustcode() + " not found!"));
+            newCustomer.setCustcode(customer.getCustcode());
+        }
+
+        newCustomer.setCustname(customer.getCustname());
+        newCustomer.setCustcity(customer.getCustcity());
+        newCustomer.setCustcountry(customer.getCustcountry());
+        newCustomer.setWorkingarea(customer.getWorkingarea());
+        newCustomer.setCustcountry(customer.getCustcountry());
+        newCustomer.setGrade(customer.getGrade());
+        newCustomer.setOpeningamt(customer.getOpeningamt());
+        newCustomer.setReceiveamt(customer.getReceiveamt());
+        newCustomer.setPaymentamt(customer.getPaymentamt());
+        newCustomer.setOutstandingamt(customer.getOutstandingamt());
+        newCustomer.setPhone(customer.getPhone());
+        newCustomer.setAgent(customer.getAgent());
+
+        //OneToMany -> new resources that arent in the database yet
+        newCustomer.getOrders().clear();
+        for (Order m : customer.getOrders()) {
+            Order newOrder = new Order();
+            newOrder.setOrdamount(m.getOrdamount());
+            newOrder.setOrderdescription(m.getOrderdescription());
+
+            newOrder.setCustomer(newCustomer);
+
+            newCustomer.getOrders().add(newOrder);
+        }
+
+        return custrepos.save(newCustomer);
     }
 
     @Override

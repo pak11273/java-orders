@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface CustomersRepository extends CrudRepository<Customer, Long>
 {
+    Customer save(Customer customer);
+
     List<Customer> findByCustnameContainingIgnoringCase(String subname);
 }
