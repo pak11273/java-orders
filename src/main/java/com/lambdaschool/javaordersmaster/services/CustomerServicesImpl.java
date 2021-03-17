@@ -35,4 +35,9 @@ public class CustomerServicesImpl implements CustomerServices {
     public Customer findCustomerById(long custid) {
         return custrepos.findById(custid).orElseThrow(()-> new EntityNotFoundException("Customer " + custid + " was not found."));
     }
+
+    @Override
+    public List<Customer> findByNameLike(String subname) {
+        return custrepos.findByCustnameContainingIgnoringCase(subname);
+    }
 }
