@@ -14,4 +14,6 @@ public interface CustomerServices {
     List<Customer> findByNameLike(String subname);
 
     void delete(long id);
+
+    Customer update(long id, Customer customer);
 }

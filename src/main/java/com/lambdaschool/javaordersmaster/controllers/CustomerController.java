@@ -74,9 +74,24 @@ public class CustomerController
     }
 
 
-// PUT /customers/customer/{custcode} - completely replaces the customer record including associated orders with the provided data
+    //http://localhost:2019/customers/customer/{custid}
+    @PutMapping(value = "/customer/{custid}", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<?> replacecustomerById(@PathVariable long custid, @RequestBody @Valid Customer customer) {
+        customer.setCustomerid(custid);
 
-// PATCH /customers/customer/{custcode} - updates customers with the new data. Only the new data is to be sent from the frontend client.
+        Customer newcustomer = customerServices.save(customer);
+
+        return new ResponseEntity<>(newcustomer, HttpStatus.OK);
+    }
+
+
+    //http://localhost:2019/customers/customer/{custid}
+    @PatchMapping(value = "/customer/{custid}", produces = "application/json", consumes = "application/json")
+        public ResponseEntity<?> updatecustomerById(@PathVariable long custid, @RequestBody Customer customer) {
+        Customer updatedcustomer = customerServices.update(custid, customer);
+
+        return new ResponseEntity<>(updatedcustomer, HttpStatus.OK);
+    }
 
 
 }

@@ -85,4 +85,75 @@ public class CustomerServicesImpl implements CustomerServices {
         custrepos.findById(id).orElseThrow(()-> new EntityNotFoundException("Restaurant " + id + " not found."));
         custrepos.deleteById(id);
     }
+
+    @Transactional
+    @Override
+    public Customer update(long id, Customer customer) {
+            Customer updateCustomer = custrepos.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("Customer " + id + " not found!"));
+
+            if (customer.getCustname() != null ) {
+                updateCustomer.setCustname(customer.getCustname());
+            }
+            if (customer.getCustcity() != null ) {
+                updateCustomer.setCustcity(customer.getCustcity());
+            }
+            if (customer.getCustcountry() != null ) {
+                updateCustomer.setCustcountry(customer.getCustcountry());
+            }
+            if (customer.getWorkingarea() != null ) {
+                updateCustomer.setWorkingarea(customer.getWorkingarea());
+            }
+            if (customer.getGrade() != null ) {
+                updateCustomer.setGrade(customer.getGrade());
+            }
+            if (customer.getPhone() != null ) {
+                updateCustomer.setPhone(customer.getPhone());
+            }
+            if (customer.getAgent() != null ) {
+                updateCustomer.setAgent(customer.getAgent());
+            }
+            if (customer.getOrders() != null ) {
+                updateCustomer.setOrders(customer.getOrders());
+            }
+            if (customer.hasvalueforOpeningamt) {
+                updateCustomer.setOpeningamt(customer.getOpeningamt());
+            }
+            if (customer.hasvalueforPayment) {
+                updateCustomer.setPaymentamt(customer.getPaymentamt());
+            }
+            if (customer.hasvalueforOutstandingamt) {
+                updateCustomer.setOutstandingamt(customer.getOutstandingamt());
+            }
+            if (customer.getOrders().size() > 0) {
+                //OneToMany -> new resources that arent in the database yet
+                updateCustomer.getOrders().clear();
+                for (Order m : customer.getOrders()) {
+                    Order newOrder = new Order();
+                    newOrder.setCustomer(m.getCustomer());
+                    newOrder.setOrdamount(m.getOrdamount());
+                    newOrder.setOrderdescription(m.getOrderdescription());
+                    newOrder.setPayments(m.getPayments());
+                    newOrder.setAdvanceamount(m.getAdvanceamount());
+
+                    newOrder.setCustomer(updateCustomer);
+
+                    updateCustomer.getOrders().add(newOrder);
+                }
+            }
+
+//            if (customer.getPayments().size() > 0) {
+//                //ManyToMany -> existing database entities
+//                updateCustomer.getPayments().clear();
+//                for (Payment p : customer.getPayments()) {
+//                    Payment newPayment = paymentRepository.findById(p.getPaymentid())
+//                            .orElseThrow(() -> new EntityNotFoundException("Payment " + p.getPaymentid() + " not found!"));
+//
+//                    updateCustomer.getPayments().add(newPayment);
+//                }
+//            }
+
+            return custrepos.save(updateCustomer);
+        }
+
 }

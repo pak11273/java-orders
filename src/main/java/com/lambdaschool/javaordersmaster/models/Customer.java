@@ -36,6 +36,15 @@ public class Customer {
 
     private String phone;
 
+    @Transient //dont save this to the database
+    public boolean hasvalueforOpeningamt = false;
+
+    @Transient //dont save this to the database
+    public boolean hasvalueforPayment = false;
+
+    @Transient //dont save this to the database
+    public boolean hasvalueforOutstandingamt = false;
+
     @ManyToOne
     @JoinColumn(name = "agentcode", nullable = false)
     @JsonIgnoreProperties(value="customers", allowSetters = true)
@@ -166,6 +175,9 @@ public class Customer {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public void setCustomerid(long id) {
     }
 }
 
