@@ -48,7 +48,16 @@ public class OrderController {
         orderServices.delete(orderid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-// PUT /orders/order/{ordernum} - completely replaces the given order record
+
+    // localhost:2019/orders/order/{orderid}
+    @PutMapping(value = "/order/{orderid}", produces = "application/json", consumes = "application/json")
+        public ResponseEntity<?> replaceorderById(@PathVariable long orderid, @RequestBody @Valid Order order) {
+        order.setorderid(orderid);
+
+        Order newOrder = orderServices.save(order);
+
+        return new ResponseEntity<>(newOrder, HttpStatus.OK);
+    }
 
 }
 
