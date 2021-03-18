@@ -53,4 +53,9 @@ public class OrderServicesImpl implements OrderServices {
     public Order findById(long orderid) {
         return orderrepos.findById(orderid).orElseThrow(()-> new EntityNotFoundException("Order " + orderid + " was not found."));
     }
+
+    @Override
+    public void delete(long id) {
+
+    }
 }

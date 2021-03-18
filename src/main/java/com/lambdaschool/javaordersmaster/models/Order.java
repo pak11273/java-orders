@@ -27,8 +27,7 @@ public class Order {
     Set<Payment> payments = new HashSet<>();
 
     @ManyToOne
-    @JoinColumn(name="custcode")
-    @JsonIgnoreProperties("orders")
+    @JoinColumn(name="custcode") @JsonIgnoreProperties("orders")
     private Customer customer;
 
     public Order() {

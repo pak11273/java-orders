@@ -42,10 +42,13 @@ public class OrderController {
 
     }
 
-// POST /orders/order - adds a new order to an existing customer
-
+    // localhost:2019/orders/order/{ordernum}
+    @DeleteMapping(value = "/order/{orderid}")
+    public ResponseEntity<?> deleteById(@PathVariable long orderid) {
+        orderServices.delete(orderid);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 // PUT /orders/order/{ordernum} - completely replaces the given order record
 
-// DELETE /orders/order/{ordernum} - deletes the given order
 }
 
