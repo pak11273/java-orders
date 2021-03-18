@@ -3,12 +3,14 @@ package com.lambdaschool.javaordersmaster.controllers;
 import com.lambdaschool.javaordersmaster.models.Order;
 import com.lambdaschool.javaordersmaster.services.OrderServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import javax.validation.Valid;
+import java.net.URI;
 
 @RestController
 @RequestMapping("/orders")
@@ -23,5 +25,27 @@ public class OrderController {
         Order c = orderServices.findById(orderid);
         return new ResponseEntity<>(c, HttpStatus.OK);
     }
+
+    @PostMapping(value = "/order", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<?> addNeworder(@RequestBody @Valid Order order)
+    {
+        order.setOrdnum(0);
+
+        Order neworder = orderServices.save(order);
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        URI neworderURI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{orderid}").buildAndExpand(neworder.getOrdnum()).toUri();
+
+        responseHeaders.setLocation(neworderURI);
+
+        return new ResponseEntity<>(neworder, responseHeaders, HttpStatus.CREATED);
+
+    }
+
+// POST /orders/order - adds a new order to an existing customer
+
+// PUT /orders/order/{ordernum} - completely replaces the given order record
+
+// DELETE /orders/order/{ordernum} - deletes the given order
 }
 
